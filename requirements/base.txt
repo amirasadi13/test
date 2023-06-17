@@ -1,0 +1,15 @@
+fastapi
+orjson
+pydantic
+SQLAlchemy
+starlette
+typing_extensions
+uvicorn
+psycopg2-binary
+databases
+python-jose[cryptography]
+passlib[bcrypt]
+pydantic[email]
+asyncpg
+opencv-contrib-python-headless
+opencv-python

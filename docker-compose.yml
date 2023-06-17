@@ -1,0 +1,56 @@
+version: "3.8"
+services:
+  database:
+    restart: always
+    hostname: database
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=postgres
+    volumes:
+      - .database:/var/lib/postgres
+    networks:
+      default:
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/local.Dockerfile
+    command: sh ./docker/server_entry.sh
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - '8000:8000'
+    networks:
+      default:
+    depends_on:
+      - database
+    links:
+      - database
+
+volumes:
+  database:
+
+networks:
+  default:
+
+#  redis:
+#    image: redis:7-alpine
+#    hostname: redis
+
+#  celery:
+#    build:
+#      context: .
+#      dockerfile: docker/local.Dockerfile
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - api
+#      - redis
