@@ -14,13 +14,6 @@ class AccessTokenResponse(BaseModel):
     refresh_token: str
 
 
-class TokenResponse(BaseModel):
-    refresh_token: str
-
-    class Config:
-        orm_mode = True
-
-
 class AuthUser(BaseModel):
     email: EmailStr
     password: str = Field(min_length=6, max_length=128)

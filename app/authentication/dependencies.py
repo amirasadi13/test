@@ -37,26 +37,3 @@ def valid_token(*, token: Annotated[str, Depends(oauth2_scheme)]):
 def _validate_token_expire_date(token_expire_time: float) -> bool:
     return token_expire_time > datetime.utcnow().timestamp()
 
-
-
-# def valid_refresh_token(refresh_token: str) -> Token:
-#     db: Session = get_database()
-#     db_refresh_token = get_refresh_token(db=db, refresh_token=refresh_token)
-#
-#     if not db_refresh_token:
-#         raise RefreshTokenNotValid()
-#
-#     if not _is_valid_refresh_token(db_refresh_token):
-#         raise RefreshTokenNotValid()
-#
-#     return db_refresh_token
-
-
-# def valid_refresh_token_user(refresh_token: Token = Depends(valid_refresh_token), ) -> User:
-#     db: Session = get_database()
-#     user = get_user_by_id(db, refresh_token.user_id)
-#     if not user:
-#         raise RefreshTokenNotValid()
-#
-#     return user
-

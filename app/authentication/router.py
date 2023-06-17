@@ -1,11 +1,10 @@
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 
-from .dependencies import valid_token
 from .services import get_user_by_email, create_user as register_user, authenticate_user, \
     create_refresh_token, get_tokens_list
 from .dependencies import create_access_token
-from .schemas import UserCreate, AccessTokenResponse, AuthUser, TokenResponse
+from .schemas import UserCreate, AccessTokenResponse, AuthUser
 from ..database import get_database
 
 router = APIRouter()
@@ -33,9 +32,3 @@ def login(auth_data: AuthUser, db: Session = Depends(get_database)) -> AccessTok
         refresh_token=refresh_token_value,
     )
 
-
-@router.get("/users/tokens/", response_model=list[TokenResponse])
-def tokens_list(db: Session = Depends(get_database),
-                token: str = Depends(valid_token)) -> list[TokenResponse]:
-    users = get_tokens_list(db)
-    return users
