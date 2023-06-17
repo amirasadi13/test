@@ -4,10 +4,8 @@ services:
     restart: always
     hostname: database
     image: postgres:13-alpine
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=postgres
+    env_file:
+      - .env
     volumes:
       - .database:/var/lib/postgres
     networks:
@@ -40,17 +38,3 @@ volumes:
 
 networks:
   default:
-
-#  redis:
-#    image: redis:7-alpine
-#    hostname: redis
-
-#  celery:
-#    build:
-#      context: .
-#      dockerfile: docker/local.Dockerfile
-#    volumes:
-#      - .:/app
-#    depends_on:
-#      - api
-#      - redis
